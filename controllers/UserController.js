@@ -2,8 +2,8 @@ const User = require('../models/User')
 
 class Users {
     static async CreateUser(req, res) {
-        const {name,email,password} = req.body
-        const user =await User.create({name, email, password})
+        const {name,email,password,role} = req.body
+        const user =await User.create({name, email, password, role})
       res.json({user})
     }
     static async UpdateUser(req, res) {
@@ -22,8 +22,8 @@ class Users {
       res.json({users})
     }
     static async DeleteUser(req, res) {
-        const {email} = req.body
-        const user =await User.deleteOne({email: email})
+        const id = req.params.id
+        const user =await User.deleteOne({_id: id})
       res.json({user})
     }
 }
