@@ -5,11 +5,19 @@ const User = require('../models/User');
   await User.create({
     email: 'admin@example.com', 
     password: "password", 
-    name: "Banan Paj",
+    name: "Admin",
+    role: "admin",
   })
   await User.create({
-    email: 'customer@example.com', 
+    email: 'client@example.com', 
     password: "password", 
-    name: "Grill Korv",
+    name: "Client",
+    role: "client",
+  })
+  await User.create({
+    email: 'worker@example.com', 
+    password: "password", 
+    name: "Worker",
+    role: "worker",
   })
 })()

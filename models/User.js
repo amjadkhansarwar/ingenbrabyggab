@@ -15,7 +15,11 @@ const user = new mongoose.Schema( {
       type: String,
       allowNull: false
     },
-   
+   role:{
+       type: String,
+       enum: ['client', 'admin', 'worker'],
+       allowNull :false
+   }
   })
 
 
