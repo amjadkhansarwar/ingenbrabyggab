@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-class Auth{
-    static adminAuth (req, res, next){
+class WorkerAuth{
+    static workerAuth (req, res, next){
         if(!req.headers.authorization){
-            return res.json({message: 'Unauthorized'})
+            return res.json({message: 'Your token is missing'})
         }
         try {
             const token = req.headers.authorization.replace("Bearer ","")
-            const  user = jwt.verify(token, process.env.SECRET_KEY)
+            const  user = jwt.verify(token, process.env.SECRET_KEY_WORKER)
             console.log(user)
             req.user ={
                 email:user.email,
@@ -22,7 +22,5 @@ class Auth{
         }
         next()
     }
-
 }
-
-module.exports = Auth
+module.exports= WorkerAuth
