@@ -1,6 +1,24 @@
 const User = require('../models/User')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 class Users {
+    static async loginUser(req, res) {
+        const {email,password} = req.body
+        const user =await User.findOne({email: email})
+        if(user){
+            let payload={
+                email:user.email,
+                name: user.name
+            }
+            const token = jwt.sign(payload, process.env.SECRET_KEY,"120ms")
+            res.json({token})
+        }
+        else{
+            res.status(403).json({message: 'You dont have account'})
+        }
+      res.json({user})
+    }
     static async CreateUser(req, res) {
         const {name,email,password,role} = req.body
         const user =await User.create({name, email, password, role})
