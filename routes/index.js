@@ -1,3 +1,5 @@
-const users = require('./UserRoute')
+const admin = require('./AdminRoute')
+const worker = require('./WorkerRoute')
+const client = require('./ClientRoute')
 
-module.exports = {users}
+module.exports = {admin,worker,client}

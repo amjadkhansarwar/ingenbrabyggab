@@ -1,20 +1,29 @@
 const express = require("express")
 const app = express()
 const routes = require('./routes')
+
 app.use( express.json() )
-
 app.use(express.urlencoded({extended: true}))
-app.use('/api/user', routes.users)
+app.use('/api/admin', routes.admin)
+app.use('/api/worker', routes.worker)
+app.use('/api/client', routes.client)
 
-// const mongoose = require('mongoose')
-// const connection = require('../database/connection')
-// const User = require('./models/User');
+const bcrypt = require('bcryptjs')
 
-*
-// app.post('/createuser', async (req, res)=>{
-//     const {name,email,password} = req.body
-//     await User.create({name, email, password})
-//       res.send('user is created')
+function generateHash(password){
+  const hash = bcrypt.hashSync(password)
+  return hash
+}
 
-// })
+
+
+const password = "grillkorv123"
+
+const hash = generateHash(password);
+
+
+
+const result = bcrypt.compareSync("grillkorv123", hash)
+console.log(result);
+
 app.listen(8000)
