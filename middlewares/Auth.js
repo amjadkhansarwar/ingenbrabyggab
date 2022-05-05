@@ -9,12 +9,11 @@ class Auth{
         try {
             const token = req.headers.authorization.replace("Bearer ","")
             const  user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
-            console.log(user)
             if(! user.role =='admin')
             {
                 throw new error('Forbiden')
             }
-            req.user = user
+           // req.user = user
             next()
             } catch (error) {
             if(error instanceof jwt.TokenExpiredError){
@@ -33,12 +32,15 @@ class Auth{
         try {
             const token = req.headers.authorization.replace("Bearer ","")
             const  user = jwt.verify(token, process.env.SECRET_KEY_WORKER)
-            console.log(user)
             if(! user.role =='worker')
             {
                 throw new error('Forbiden')
             }
-            req.user = user
+            req.user = {
+                worker_id: user.worker_id,
+                email: user.email,
+                name: user.name
+            }
             next()
         } catch (error) {
             if(error instanceof jwt.TokenExpiredError){
@@ -57,7 +59,6 @@ class Auth{
         try {
             const token = req.headers.authorization.replace("Bearer ","")
             const  user = jwt.verify(token, process.env.SECRET_KEY_CLIENT)
-            console.log(user)
             if(! user.role =='client')
             {
                 throw new error('Forbiden')
