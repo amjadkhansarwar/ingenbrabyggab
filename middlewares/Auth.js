@@ -37,8 +37,7 @@ class Auth{
                 throw new error('Forbiden')
             }
             req.user = {
-                worker_id: user.worker_id,
-                email: user.email,
+                id: user.worker_id,
                 name: user.name
             }
             next()
@@ -63,7 +62,10 @@ class Auth{
             {
                 throw new error('Forbiden')
             }
-            req.user = user
+            req.user = {
+                id: user.client_id,
+                name: user.name
+            }
             next()
         } catch (error) {
             if(error instanceof jwt.TokenExpiredError){

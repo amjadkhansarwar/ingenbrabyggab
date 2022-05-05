@@ -14,11 +14,12 @@ class Client {
             }
             else{
                 let payload={
+                    client_id : client.id,
                     email:client.email,
                     name: client.name,
                     role: 'client'
                 }
-                const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, { expiresIn: '600s' })
+                const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, { expiresIn: '1h' })
                 res.json({token})
             }  
         } catch (error) {

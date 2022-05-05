@@ -1,14 +1,22 @@
 const TaskModel = require('../models/Task')
+const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
+const req = require('express/lib/request')
 require('dotenv').config()
 
 class Task{
     static async CreateTask(req, res, next){
         const {title,description}= req.body
-        const worker_id = req.user.worker_id
+        const worker_id = req.user.id
+        const client_id = req.params.id
+
         try {
-            const task = await TaskModel.create({title:title, description: description, worker_id: worker_id})
+            const findClient = await User.findOne({id: client_id, role: 'client'})
+            if(!findClient){
+                throw new ResourseNotFoundError('There is no Valid Client with ID:', client_id)
+            }
+            const task = await TaskModel.create({title:title, description: description, worker_id: worker_id, client_id: client_id})
             if(!task){
                 throw new ResourseNotFoundError('Task is not Created')
               }
