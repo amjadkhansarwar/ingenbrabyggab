@@ -14,10 +14,12 @@ class Worker {
             }
             else{
                 let payload={
+                    worker_id: worker.id,
                     email:worker.email,
-                    name: worker.name
+                    name: worker.name,
+                    role: 'worker'
                 }
-                const token = jwt.sign(payload, process.env.SECRET_KEY_WORKER, { expiresIn: '60s' })
+                const token = jwt.sign(payload, process.env.SECRET_KEY_WORKER, { expiresIn: '600s' })
                 res.json({token})
             }  
         } catch (error) {

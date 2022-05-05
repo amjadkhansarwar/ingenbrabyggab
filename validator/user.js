@@ -35,6 +35,35 @@ static  createValidate (req, res ,next)
             next()
         }
     }
+    static  taskValidate (req, res ,next)
+   {
+        if(!req.body.title){
+            res.status(400).json({
+                error: 'Title is requaire'
+            })
+        }else if(! req.body.description){
+            res.status(400).json({
+                error: 'Description is Requaired'
+            })
+        }
+        else{
+            next()
+        }
+    }
+
+    static  messageValidate (req, res ,next)
+    {
+         if(!req.body.title){
+             res.status(400).json({
+                 error: 'Text is requaire'
+             })
+         }
+         else{
+             next()
+         }
+     }
+    
+
     // static deleteValidate (req, res, next){
     //     const id = req.params.id
     //     if(!req.params.id.isLength({ min: 24 })){

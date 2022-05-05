@@ -14,9 +14,10 @@ class Admin {
           else{
               let payload={
                   email:admin.email,
-                  name: admin.name
+                  name: admin.name,
+                  role: 'admin'
               }
-              const token = jwt.sign(payload, process.env.SECRET_KEY_ADMIN, { expiresIn: '60s' })
+              const token = jwt.sign(payload, process.env.SECRET_KEY_ADMIN, { expiresIn: '1h' })
               res.json({token})
           }  
       } catch (error) {
@@ -26,6 +27,7 @@ class Admin {
 
     static async CreateWorker(req, res, next) {
         const {name,email,password} = req.body
+
         try {
           const findworker =await User.findOne({email: email, role: 'worker'})
           if(findworker){
