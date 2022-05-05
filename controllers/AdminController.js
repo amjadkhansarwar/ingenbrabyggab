@@ -14,9 +14,11 @@ class Admin {
           else{
               let payload={
                   email:admin.email,
-                  name: admin.name
+                  name: admin.name,
+                  role: 'admin'
               }
-              const token = jwt.sign(payload, process.env.SECRET_KEY_ADMIN, { expiresIn: '60s' })
+              const token = jwt.sign(payload, process.env.SECRET_KEY_ADMIN, { expiresIn: '600s' })
+              console.log(token)
               res.json({token})
           }  
       } catch (error) {

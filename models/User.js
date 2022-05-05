@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const connection = require('../database/connection')
+const bcrypt = require('bcryptjs')
 
 
 const user = new mongoose.Schema( {
@@ -11,7 +12,7 @@ const user = new mongoose.Schema( {
       type: String,
       allowNull: false
     },
-    password: {
+    password_hash: {
       type: String,
       allowNull: false
     },
@@ -23,6 +24,13 @@ const user = new mongoose.Schema( {
   })
 
 
+  user.pre('save', async function(next){
+    try {
+      
+    } catch (error) {
+      
+    }
+  })
 
 const User= connection.model('User', user);
 module.exports = User
