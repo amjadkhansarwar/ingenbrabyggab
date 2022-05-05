@@ -1,26 +1,34 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
+const passwordHash= require('../security')
 require('dotenv').config()
 
 class Client {
 
     static async loginClient(req, res, next){
-        const {email,password} = req.body
+        const {email} = req.body
         try {
-            const client =await User.findOne({email: email, password: password, role: 'client'})
+            const client =await User.findOne({email: email, role: 'client'})
             if(!client){
                 throw new ResourseNotFoundError(' You dont have Client Account  with this Email: '+ email +'')
             }
             else{
-                let payload={
+                const password = req.body.password
+                const validPassword = await passwordHash.dcryptPassword(password, client.password)
+                 if (!validPassword) {
+                      throw new ResourseNotFoundError('Invalid Password.')
+                    }
+                    else{
+                    let payload={
                     client_id : client.id,
                     email:client.email,
                     name: client.name,
                     role: 'client'
+                    }
+                    const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, { expiresIn: '1h' })
+                     res.json({token})
                 }
-                const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, { expiresIn: '1h' })
-                res.json({token})
             }  
         } catch (error) {
             next(error)
