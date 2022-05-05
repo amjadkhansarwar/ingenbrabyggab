@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
+const passwordHash = require('../security')
 require('dotenv').config()
 
 class Worker {
@@ -8,11 +9,13 @@ class Worker {
     static async loginWorker(req, res, next){
         const {email,password} = req.body
         try {
-            const worker =await User.findOne({email: email, password: password, role: 'worker'})
+            const worker =await User.findOne({email: email, role: 'worker'})
             if(!worker){
                 throw new ResourseNotFoundError(' You dont have worker Account  with this Email: '+ email +'')
             }
             else{
+                const validPassword = await passwordHash.dcryptPassword(password, worker.password)
+                if (!validPassword)  throw new ResourseNotFoundError('Invalid Password.')
                 let payload={
                     worker_id: worker.id,
                     email:worker.email,
@@ -47,6 +50,17 @@ class Worker {
         catch (error) {
             next(error)
         }
+    }
+    static async GetAllWorker(req, res, next ) {
+          try {
+            const worker = await User.find({role: 'worker'})
+            if(!worker){
+              throw new ResourseNotFoundError(' There is no worker in your database')
+            }
+            res.json({worker})
+          } catch (error) {
+            next(error)
+          }
     }
 }
 
