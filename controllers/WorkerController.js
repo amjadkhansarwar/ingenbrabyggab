@@ -14,6 +14,7 @@ class Worker {
             }
             else{
                 let payload={
+                    worker_id: worker.id,
                     email:worker.email,
                     name: worker.name,
                     role: 'worker'

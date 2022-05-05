@@ -12,7 +12,7 @@ const user = new mongoose.Schema( {
       type: String,
       allowNull: false
     },
-    password_hash: {
+    password: {
       type: String,
       allowNull: false
     },
