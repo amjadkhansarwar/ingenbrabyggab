@@ -51,6 +51,19 @@ static  createValidate (req, res ,next)
         }
     }
 
+    static  messageValidate (req, res ,next)
+    {
+         if(!req.body.title){
+             res.status(400).json({
+                 error: 'Text is requaire'
+             })
+         }
+         else{
+             next()
+         }
+     }
+    
+
     // static deleteValidate (req, res, next){
     //     const id = req.params.id
     //     if(!req.params.id.isLength({ min: 24 })){
