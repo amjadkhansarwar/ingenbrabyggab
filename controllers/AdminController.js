@@ -1,17 +1,21 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
+const passwordHash= require('../security')
 require('dotenv').config()
 
 class Admin {
     static async loginAdmin(req, res, next) {
-        const {email,password} = req.body
+        const email = req.body.email
+        const password = req.body.password
         try {
-          const admin =await User.findOne({email: email, password: password, role: 'admin'})
+          const admin =await User.findOne({email: email, role: 'admin'})
           if(!admin){
-              throw new ResourseNotFoundError(' You dont have worker Account  with this Email: '+ email +'')
+              throw new ResourseNotFoundError(' You dont have Admin Account  with this Email: '+ email +'')
           }
           else{
+            const validPassword = await passwordHash.dcryptPassword(password, admin.password)
+            if (!validPassword)  throw new ResourseNotFoundError('Invalid Password.')
               let payload={
                   email:admin.email,
                   name: admin.name,
@@ -26,13 +30,15 @@ class Admin {
     }
 
     static async CreateWorker(req, res, next) {
-        const {name,email,password} = req.body
+        const {name,email} = req.body
 
         try {
           const findworker =await User.findOne({email: email, role: 'worker'})
           if(findworker){
             throw new ResourseNotFoundError('Worker account is already Created with this Email: '+ email +'')
           }
+          const userPassword= req.body.password
+          const password = await passwordHash.bcryptPassword(userPassword)
           const worker =await User.create({name, email, password, role: 'worker'})
           if(!worker){
             throw new ResourseNotFoundError('Worker is not Created')
@@ -45,12 +51,14 @@ class Admin {
     }
 
     static async CreateClient(req, res, next) {
-      const {name,email,password} = req.body
+      const {name,email} = req.body
       try {
         const findClient =await User.findOne({email: email, role: 'client'})
         if(findClient){
           throw new ResourseNotFoundError('Client account is already Created with this Email: '+ email +'')
         }
+        const userPassword= req.body.password
+        const password = await passwordHash.bcryptPassword(userPassword)
         const client =await User.create({name, email, password, role: 'client'})
         if(!client){
           throw new ResourseNotFoundError('Client is not Created')

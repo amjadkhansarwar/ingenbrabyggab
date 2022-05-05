@@ -38,7 +38,8 @@ class Auth{
             }
             req.user = {
                 id: user.worker_id,
-                name: user.name
+                name: user.name,
+                role: user.role
             }
             next()
         } catch (error) {
@@ -64,7 +65,8 @@ class Auth{
             }
             req.user = {
                 id: user.client_id,
-                name: user.name
+                name: user.name,
+                role: user.role
             }
             next()
         } catch (error) {

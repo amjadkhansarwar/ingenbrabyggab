@@ -30,6 +30,30 @@ class Mymessage{
          next(error)   
         }
     }
+    static async GetAllTasks(req, res, next){
+        const  user_id = req.user.id
+        const user_role = req.user.role
+        let findTask = '' 
+        try {
+            
+            if(user_role == 'worker')
+            {
+                 findTask = await TaskModel.find({worker_id:user_id})
+            }else{
+                 findTask = await TaskModel.find({client_id:user_id}) 
+            }
+            if(!findTask){
+                throw new ResourseNotFoundError('There is no Task with ID: ', findTask)
+            }
+            else
+            {
+                res.json({findTask})
+            }
+            
+        } catch (error) {
+         next(error)   
+        }
+    }
 
 }
 
