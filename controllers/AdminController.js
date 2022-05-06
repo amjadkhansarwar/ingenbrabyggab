@@ -68,9 +68,9 @@ class Admin {
       } catch (error) {
         next(error)
       }     
-  }
+    }
 
-  static async DeleteWorker(req, res, next) {
+   static async DeleteWorker(req, res, next) {
     const id = req.params.id
     try {
       const worker =await User.findOneAndRemove({_id: id, role: 'worker'})
@@ -83,9 +83,8 @@ class Admin {
     } catch (error) {
       next(error)
     } 
-}
-
-static async DeleteClient(req, res, next) {
+    }
+   static async DeleteClient(req, res, next) {
   const id = req.params.id
   try {
     const client =await User.findOneAndRemove({_id: id, role: 'client'})
@@ -98,34 +97,7 @@ static async DeleteClient(req, res, next) {
   } catch (error) {
     next(error)
   } 
-}
-    
-    // static async UpdateWorker(req, res, next ) {
-    //     const id = req.params.id
-    //     const {name,email,password} = req.body
-    //     const user =await User.updateOne({_id: id},{name: name,email:email,password: password})
-    //   res.json({user})
-    // }
-    // static async GetOneWorker(req, res, next) {
-    //     const id = req.params.id
-    //     const user =await User.findOne({_id: id, role: 'worker'})
-    //   res.json({user})
-    // }
-    // static async GetAllWorker(req, res, next ) {
-    //   try {
-    //     const worker = await User.find({role: 'worker'})
-    //     if(!worker){
-    //       throw new ResourseNotFoundError(' There is no worker in your database')
-    //     }
-    //     res.json({worker})
-    //   } catch (error) {
-    //     next(error)
-    //   }
-      
-    // }
-
-
-    
+    }   
 }
 
 module.exports = Admin

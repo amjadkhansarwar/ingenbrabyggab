@@ -1,9 +1,7 @@
 const TaskModel = require('../models/Task')
 const User = require('../models/User')
-const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
-const req = require('express/lib/request')
-require('dotenv').config()
+
 
 class Task{
     static async CreateTask(req, res, next){
@@ -12,15 +10,16 @@ class Task{
         const client_id = req.params.id
 
         try {
-            const findClient = await User.findOne({id: client_id, role: 'client'})
+            const findClient = await User.findOne({_id: client_id, role: 'client'})
             if(!findClient){
                 throw new ResourseNotFoundError('There is no Valid Client with ID:', client_id)
-            }
-            const task = await TaskModel.create({title:title, description: description, worker_id: worker_id, client_id: client_id})
-            if(!task){
-                throw new ResourseNotFoundError('Task is not Created')
-              }
-            res.json({message: 'Your New Task is created'})
+            }else{
+                   const task = await TaskModel.create({title:title, description: description, worker_id: worker_id, client_id: client_id})
+                   if(!task){
+                    throw new ResourseNotFoundError('Task is not Created')
+                   }
+                    res.json({message: 'Your New Task is created'})
+                }
         } catch (error) {
             next(error)
         }
@@ -31,7 +30,7 @@ class Task{
         try {
             const findTask =await TaskModel.findOne({_id: id})
           if(!findTask){
-            throw new ResourseNotFoundError('You dont have Task account with id: '+ id )
+            throw new ResourseNotFoundError('You dont have Task  with id: '+ id )
           }else{
             const task =await TaskModel.updateOne({_id: id},{title:title, description: description})
             if(!task){
@@ -51,7 +50,7 @@ class Task{
         try {
             const findTask =await TaskModel.findOne({_id: id})
           if(!findTask){
-            throw new ResourseNotFoundError('You dont have Task account with id: '+ id )
+            throw new ResourseNotFoundError('You dont have Task  with id: '+ id )
           }else{
             const task =await TaskModel.updateOne({_id: id},{finish_date: Date.now()})
             if(!task){
@@ -79,6 +78,31 @@ class Task{
         } catch (error) {
           next(error)
         } 
+    }
+      static async GetAllTasks(req, res, next){
+        const  user_id = req.user.id
+        const user_role = req.user.role
+        try {
+            
+            if(user_role == 'worker')
+            {
+                 const findTask = await TaskModel.find({worker_id:user_id})
+                 if(!findTask.id){
+                   throw new ResourseNotFoundError('There is no Task with ID: ')
+                 }else{
+                  res.json({findTask})
+                 }
+            }else{
+                const findTask = await TaskModel.find({client_id:user_id}) 
+                if(!findTask.id){
+                  throw new ResourseNotFoundError('There is no Task with ID: ')
+                 }else{
+                  res.json({findTask})
+                  }
+            }  
+         } catch (error) {
+         next(error)   
+        }
     }
 }
 
