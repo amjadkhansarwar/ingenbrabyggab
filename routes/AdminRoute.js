@@ -3,7 +3,7 @@ const router = new Router()
 const adminController= require('../controllers/AdminController')
 const TaskController = require('../controllers/TaskController')
 const auth = require('../middlewares/auth')
-const useerValidation = require('../validator/user')
+const useerValidation = require('../validator/validate')
 
 //----------Admin----------------//
 
