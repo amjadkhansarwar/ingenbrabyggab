@@ -2,6 +2,7 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const {ResourseNotFoundError} = require('../error')
 const passwordHash= require('../security')
+const Image = require('../models/Image')
 require('dotenv').config()
 
 class Client {
@@ -21,7 +22,7 @@ class Client {
                     }
                     else{
                     let payload={
-                    client_id : client.id,
+                    id : client.id,
                     email:client.email,
                     name: client.name,
                     role: 'client'
