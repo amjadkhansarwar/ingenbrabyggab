@@ -14,12 +14,6 @@ class Worker {
           ' You dont have worker Account  with this Email: ' + email + ''
         );
       } else {
-        const validPassword = await passwordHash.dcryptPassword(
-          password,
-          worker.password
-        );
-        if (!validPassword)
-          throw new ResourseNotFoundError('Invalid Password.');
         let payload = {
           worker_id: worker.id,
           email: worker.email,
@@ -46,9 +40,10 @@ class Worker {
           'You dont have Worker account with id: ' + id
         );
       } else {
+        const hashPassword = await passwordHash.bcryptPassword(password);
         const worker = await User.updateOne(
           { _id: id },
-          { name: name, email: email, password: password, role: 'worker' }
+          { name: name, email: email, password: hashPassword, role: 'worker' }
         );
         if (!worker) {
           throw new ResourseNotFoundError('Your Account is not Updated');

@@ -33,5 +33,6 @@ user.pre('save', async function (next) {
   }
 });
 
+
 const User = connection.model('User', user);
 module.exports = User;

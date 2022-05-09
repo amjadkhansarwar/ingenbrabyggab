@@ -27,7 +27,7 @@ class Client {
           const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, {
             expiresIn: '1h',
           });
-          res.json({ token, payload })
+          res.json({ token})
       }
     } catch (error) {
       next(error);
@@ -44,9 +44,10 @@ class Client {
           'You dont have Client account with id: ' + id
         );
       } else {
+        const hashPassword = await passwordHash.bcryptPassword(password);
         const client = await User.updateOne(
           { _id: id },
-          { name: name, email: email, password: password, role: 'client' }
+          { name: name, email: email, password: hashPassword, role: 'client' }
         );
         if (!client) {
           throw new ResourseNotFoundError('Your Account is not Updated');
