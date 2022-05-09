@@ -58,7 +58,7 @@ class Auth {
         throw new error('Forbiden');
       }
       req.user = {
-        id: user.client_id,
+        id: user.id,
         name: user.name,
         role: user.role,
       };

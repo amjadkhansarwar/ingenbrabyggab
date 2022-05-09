@@ -45,6 +45,7 @@ router.post(
   '/tasks/:id/image',
   auth.workerAuth,
   fileUpload.single('imageName'),
+  validation.imageValidate,
   ImageController.ImageUpload
 );
 

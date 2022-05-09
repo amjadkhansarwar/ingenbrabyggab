@@ -8,6 +8,7 @@ class Images {
     const picture = req.file.filename;
     const user_name = req.user.name;
     const sender_id = req.user.id;
+    const sender_role=  req.user.role
     const task_id = req.params.id;
     try {
       const findTask = await Task.findOne({ _id: task_id });
@@ -23,6 +24,7 @@ class Images {
                   picture: picture,
                   sender_id: sender_id,
                   sender_name: user_name,
+                  sender_role: sender_role
                 },
               ],
             },
@@ -45,6 +47,7 @@ class Images {
                 picture: picture,
                 sender_id: sender_id,
                 sender_name: user_name,
+                sender_role: sender_role
               },
             ],
           });

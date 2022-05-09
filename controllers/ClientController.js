@@ -15,24 +15,19 @@ class Client {
         );
       } else {
         const password = req.body.password;
-        const validPassword = await passwordHash.dcryptPassword(
-          password,
-          client.password
-        );
-        if (!validPassword) {
+        const validPassword = await passwordHash.dcryptPassword(password, client.password);
+        if (!validPassword) 
           throw new ResourseNotFoundError('Invalid Password.');
-        } else {
           let payload = {
             id: client.id,
             email: client.email,
             name: client.name,
-            role: 'client',
-          };
+            role: 'client'
+          }
           const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, {
             expiresIn: '1h',
           });
-          res.json({ token });
-        }
+          res.json({ token, payload })
       }
     } catch (error) {
       next(error);

@@ -24,6 +24,10 @@ const image = new mongoose.Schema({
         type: String,
         required: true,
       },
+      sender_role: {
+        type: String,
+        required: true
+      }
     },
   ],
 });

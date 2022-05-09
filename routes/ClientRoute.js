@@ -31,7 +31,6 @@ router.post(
   '/tasks/:id/image',
   auth.clientAuth,
   fileUpload.single('imageName'),
-  validation.imageValidate,
   ImageController.ImageUpload
 );
 

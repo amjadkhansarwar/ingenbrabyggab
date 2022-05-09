@@ -21,10 +21,11 @@ const Task = require('../models/Task');
     password: "password", 
     name: "Worker",
     role: "worker",
-  }),
-  await Task.create({
-    title: 'task', 
-    description: "description for task",
   })
+})
+  // await Task.create({
+  //   title: 'task', 
+  //   description: "description for task",
+  // })
 
-})()
+()
