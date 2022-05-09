@@ -1,15 +1,14 @@
-const { body } = require('express-validator');
 class Validate {
 
 static  loginValidate (req, res ,next)
    {
         if(!req.body.email){
             res.status(400).json({
-                error: 'Email is requaire'
+                error: 'Email is require'
             })
         }else if(! req.body.password){
             res.status(400).json({
-                error: 'Password is Requaired'
+                error: 'Password is require'
             })
         }
         else{
@@ -20,15 +19,15 @@ static  createValidate (req, res ,next)
    {
         if(!req.body.email){
             res.status(400).json({
-                error: 'Email is requaire'
+                error: 'Email is require'
             })
         }else if(! req.body.password){
             res.status(400).json({
-                error: 'Password is Requaired'
+                error: 'Password is require'
             })
         }else if(! req.body.name){
             res.status(400).json({
-                error: 'Name is Requaired'
+                error: 'Name is require'
             })
         }
         else{
@@ -39,11 +38,11 @@ static  createValidate (req, res ,next)
    {
         if(!req.body.title){
             res.status(400).json({
-                error: 'Title is requaire'
+                error: 'Title is require'
             })
         }else if(! req.body.description){
             res.status(400).json({
-                error: 'Description is Requaired'
+                error: 'Description is require'
             })
         }
         else{
@@ -55,11 +54,11 @@ static  createValidate (req, res ,next)
     {
          if(!req.body.title){
              res.status(400).json({
-                 error: 'Title is requaire'
+                 error: 'Title is require'
              })
          }else if(!req.body.text){
             res.status(400).json({
-                error: 'Text is requaire'
+                error: 'Text is require'
             })
         }
          else{
@@ -70,13 +69,13 @@ static  createValidate (req, res ,next)
     {
          if(!req.body.title){
              res.status(400).json({
-                 error: 'Title is requaire'
+                 error: 'Title is require'
              })
              
          }else
           if(!req.file){
             res.status(400).json({
-                error: 'Image File is requaire'
+                error: 'Image File is require'
             })
          }
          else{
