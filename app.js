@@ -6,6 +6,7 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use('/api/', routes.user);
 app.use('/api/admin', routes.admin);
 app.use('/api/worker', routes.worker);
 app.use('/api/client', routes.client);

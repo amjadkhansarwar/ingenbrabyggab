@@ -29,6 +29,10 @@ static  createValidate (req, res ,next)
             res.status(400).json({
                 error: 'Name is require'
             })
+        }else if(!req.body.role){
+            res.status(400).json({
+                error: 'Role is require. Choose worker or client.'
+            })
         }
         else{
             next()
