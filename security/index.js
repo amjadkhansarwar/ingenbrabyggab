@@ -12,6 +12,7 @@ class Bcrypt {
   }
   static async dcryptPassword(userPassword, dbPassword) {
     try {
+
       const validPassword = await bcrypt.compare(userPassword, dbPassword);
       return validPassword;
     } catch (error) {

@@ -71,7 +71,6 @@ static  createValidate (req, res ,next)
              res.status(400).json({
                  error: 'Title is require'
              })
-             
          }else
           if(!req.file){
             res.status(400).json({

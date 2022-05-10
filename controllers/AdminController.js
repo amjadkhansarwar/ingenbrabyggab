@@ -37,7 +37,7 @@ class Admin {
   }
 
   static async CreateWorker(req, res, next) {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     try {
       const findworker = await User.findOne({ email: email, role: 'worker' });
@@ -46,8 +46,6 @@ class Admin {
           'Worker account is already created with this Email: ' + email + ''
         );
       }
-      const userPassword = req.body.password;
-      const password = await passwordHash.bcryptPassword(userPassword);
       const worker = await User.create({
         name,
         email,
@@ -66,7 +64,7 @@ class Admin {
   }
 
   static async CreateClient(req, res, next) {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
     try {
       const findClient = await User.findOne({ email: email, role: 'client' });
       if (findClient) {
@@ -74,8 +72,7 @@ class Admin {
           'Client account is already Created with this Email: ' + email + ''
         );
       }
-      const userPassword = req.body.password;
-      const password = await passwordHash.bcryptPassword(userPassword);
+      
       const client = await User.create({
         name,
         email,
