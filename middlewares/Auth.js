@@ -3,17 +3,27 @@ require('dotenv').config();
 
 class Auth {
   static adminAuth(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.json({ message: 'Your token is missing' });
-    }
+
     try {
-      const token = req.headers.authorization.replace('Bearer ', '');
-      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN);
-      if (!user.role == 'admin') {
-        throw new error('Forbiden');
+      if (!req.headers.authorization) {
+        return res.json({ message: 'Your token is missing' })
+      }else{
+      const token = req.headers.authorization.replace('Bearer ', '')
+      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      if(user.role !== 'admin')
+      {
+        res.status(401).json({ error: 'Forbidden' }); 
       }
-      // req.user = user
-      next();
+      else{
+        req.user= {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role
+        }
+        next()
+      }
+    }
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
         return res.json({ message: 'your token is Expire' });
@@ -23,21 +33,26 @@ class Auth {
     }
   }
   static workerAuth(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.json({ message: 'Your token is missing' });
-    }
     try {
-      const token = req.headers.authorization.replace('Bearer ', '');
-      const user = jwt.verify(token, process.env.SECRET_KEY_WORKER);
-      if (!user.role == 'worker') {
-        throw new error('Forbiden');
+      if (!req.headers.authorization) {
+        return res.json({ message: 'Your token is missing' })
+      }else{
+      const token = req.headers.authorization.replace('Bearer ', '')
+      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      if(user.role !== 'worker')
+      {
+        res.status(401).json({ error: 'Forbidden' }); 
       }
-      req.user = {
-        id: user.worker_id,
-        name: user.name,
-        role: user.role,
-      };
-      next();
+      else{
+        req.user= {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role
+        }
+        next()
+      }
+    }
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
         return res.json({ message: 'your token is Expire' });
@@ -48,21 +63,26 @@ class Auth {
   }
 
   static clientAuth(req, res, next) {
-    if (!req.headers.authorization) {
-      return res.json({ message: 'Your token is missing' });
-    }
     try {
-      const token = req.headers.authorization.replace('Bearer ', '');
-      const user = jwt.verify(token, process.env.SECRET_KEY_CLIENT);
-      if (!user.role == 'client') {
-        throw new error('Forbiden');
+      if (!req.headers.authorization) {
+        return res.json({ message: 'Your token is missing' })
+      }else{
+      const token = req.headers.authorization.replace('Bearer ', '')
+      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      if(user.role !== 'client')
+      {
+        res.status(401).json({ error: 'Forbidden' }); 
       }
-      req.user = {
-        id: user.id,
-        name: user.name,
-        role: user.role,
-      };
-      next();
+      else{
+        req.user= {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role
+        }
+        next()
+      }
+    }
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
         return res.json({ message: 'your token is Expire' });

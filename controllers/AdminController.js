@@ -37,7 +37,7 @@ class Admin {
   }
 
   static async CreateWorker(req, res, next) {
-    const { name, email, password } = req.body;
+    const { name, email, password, role} = req.body;
 
     try {
       const findworker = await User.findOne({ email: email, role: 'worker' });
