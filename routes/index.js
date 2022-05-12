@@ -1,6 +1,5 @@
-const admin = require('./AdminRoute');
-const worker = require('./WorkerRoute');
-const client = require('./ClientRoute');
-const user = require('./UserRoute')
 
-module.exports = { admin, worker, client, user};
+const user = require('./UserRoute')
+const task = require('./TaskRoute')
+
+module.exports = {user, task};

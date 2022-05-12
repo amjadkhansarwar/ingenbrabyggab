@@ -19,8 +19,8 @@ const task = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    finish_date: {
-      type: Date,
+    done_task: {
+      type: Boolean,
     },
   },
   {

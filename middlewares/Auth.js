@@ -9,7 +9,7 @@ class Auth {
         return res.json({ message: 'Your token is missing' })
       }else{
       const token = req.headers.authorization.replace('Bearer ', '')
-      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      const user = jwt.verify(token, process.env.SECRET_KEY)
       if(user.role !== 'admin')
       {
         res.status(401).json({ error: 'Forbidden' }); 
@@ -38,7 +38,7 @@ class Auth {
         return res.json({ message: 'Your token is missing' })
       }else{
       const token = req.headers.authorization.replace('Bearer ', '')
-      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      const user = jwt.verify(token, process.env.SECRET_KEY)
       if(user.role !== 'worker')
       {
         res.status(401).json({ error: 'Forbidden' }); 
@@ -67,7 +67,7 @@ class Auth {
         return res.json({ message: 'Your token is missing' })
       }else{
       const token = req.headers.authorization.replace('Bearer ', '')
-      const user = jwt.verify(token, process.env.SECRET_KEY_ADMIN)
+      const user = jwt.verify(token, process.env.SECRET_KEY)
       if(user.role !== 'client')
       {
         res.status(401).json({ error: 'Forbidden' }); 
