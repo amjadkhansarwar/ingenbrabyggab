@@ -129,7 +129,7 @@ class User {
           }
     }
     static async updateUser(req, res, next) {
- 
+        try{
         if (!req.headers.authorization) {
             return res.json({ message: 'Your token is missing' })
           }else{
@@ -141,6 +141,13 @@ class User {
           email: user.email,
           role: user.role
            }
+        }
+      }catch(error){
+        if (error instanceof jwt.TokenExpiredError) {
+            return res.json({ message: 'your token is Expire' });
+          } else {
+            res.status(401).json({ error: 'Invalid token' });
+          }
         }
         const id = req.params.id;
         const { name, email, password } = req.body;
