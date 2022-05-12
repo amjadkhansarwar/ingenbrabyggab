@@ -27,7 +27,7 @@ class Client {
           const token = jwt.sign(payload, process.env.SECRET_KEY_CLIENT, {
             expiresIn: '1h',
           });
-          res.json({ token})
+          res.json({ token, payload})
       }
     } catch (error) {
       next(error);

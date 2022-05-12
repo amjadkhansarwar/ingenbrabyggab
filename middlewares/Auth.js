@@ -61,7 +61,6 @@ class Auth {
       }
     }
   }
-
   static clientAuth(req, res, next) {
     try {
       if (!req.headers.authorization) {

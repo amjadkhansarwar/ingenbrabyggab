@@ -64,7 +64,6 @@ class User {
               'Account already exists with email: ' + email + ''
             );
           }else {
-              console.log(role)
               if(role == 'worker'){
                 await UserModel.create({
                     name: name,
