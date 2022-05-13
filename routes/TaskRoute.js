@@ -36,18 +36,24 @@ const fileUpload = require('../middlewares/FileUpload');
 
       /// imasge route /////
 
-  router.post(
-  '/:id/uploadimage',
-  auth.userAuth,
-  fileUpload.single('imageName'),
-  validation.imageValidate,
-  ImageController.ImageUpload
-  );
+  // router.post(
+  // '/:id/uploadimage',
+  // auth.userAuth,
+  // fileUpload.single('imageName'),
+  // validation.imageValidate,
+  // ImageController.ImageUpload
+  // );
   router.get(
-  '/:id/allimages',
+  '/allimages',
   auth.userAuth,
   ImageController.GetAllImages
   );
+  router.get(
+    '/:id/image',
+    auth.userAuth,
+    ImageController.getImageById
+    );
+  
   // router.delete(
   // '/:id/deleteimage',
   // auth.adminAuth,
