@@ -11,13 +11,16 @@ const task = new mongoose.Schema(
       type: String,
       allowNull: false,
     },
+    image:{
+      type:String
+    },
     worker_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      allowNull: false
     },
     client_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      allowNull:false
     },
     done_task: {
       type: Boolean,

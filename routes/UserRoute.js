@@ -18,6 +18,7 @@ router.post(
   );
 router.get(
     '/allusers',
+    auth.userAuth,
     UserController.getAllUser
     );
 router.delete(
@@ -28,6 +29,7 @@ router.delete(
 router.patch(
       '/updateuser',
       validation.userValidate,
+      auth.userAuth,
       UserController.updateUser
       );
 module.exports= router

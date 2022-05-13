@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const connection = require('../database/connection');
 
 const image = new mongoose.Schema({
-  title: {
-    type: String,
-    allowNull: false,
-  },
   task_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Task',
@@ -15,16 +11,16 @@ const image = new mongoose.Schema({
       picture: {
         type: String,
       },
-      sender_id: {
+      user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
       },
-      sender_name: {
+      user_name: {
         type: String,
         required: true,
       },
-      sender_role: {
+      user_role: {
         type: String,
         required: true
       }

@@ -95,19 +95,6 @@ class User {
         }
     }
     static async getAllUser(req, res, next) { 
-      try{
-        if (!req.headers.authorization) {
-            return res.json({ message: 'Your token is missing' })
-          }else{
-          const token = req.headers.authorization.replace('Bearer ', '')
-          const user = jwt.verify(token, process.env.SECRET_KEY)
-          req.user= {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role
-           }
-        }
           try {
             const id = req.user.id
             const role = req.user.role
@@ -132,28 +119,8 @@ class User {
           } catch (error) {
             next(error);
           }
-        } catch(error){
-          if (error instanceof jwt.TokenExpiredError) {
-              return res.json({ message: 'your token is Expire' });
-            } else {
-              res.status(401).json({ error: 'Invalid token' });
-            }
-          }
     }
     static async updateUser(req, res, next) {
-        try{
-        if (!req.headers.authorization) {
-            return res.json({ message: 'Your token is missing' })
-          }else{
-          const token = req.headers.authorization.replace('Bearer ', '')
-          const user = jwt.verify(token, process.env.SECRET_KEY)
-          req.user= {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          role: user.role
-           }
-        }
           try {
             const { name, email, password, role } = req.body;
             const findUser = await UserModel.findOne({ _id: req.user.id, role: req.user.role });
@@ -177,13 +144,6 @@ class User {
           }catch (error) {
             next(error)
           }
-      }catch(error){
-        if (error instanceof jwt.TokenExpiredError) {
-            return res.json({ message: 'your token is Expire' });
-          } else {
-            res.status(401).json({ error: 'Invalid token' });
-          }
-        }
     }
     static async deleteUser(req, res, next) {
         const id = req.params.id;

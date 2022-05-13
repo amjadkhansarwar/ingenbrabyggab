@@ -70,11 +70,6 @@ static  messageValidate (req, res ,next)
      }
 static  imageValidate (req, res ,next)
     {
-         if(!req.body.title){
-             res.status(400).json({
-                 error: 'Title is require'
-             })
-         }else
           if(!req.file){
             res.status(400).json({
                 error: 'Image File is require'
