@@ -15,7 +15,7 @@ static  loginValidate (req, res ,next)
             next()
         }
     }
-static  createValidate (req, res ,next)
+static  userValidate (req, res ,next)
    {
         if(!req.body.email){
             res.status(400).json({
@@ -38,7 +38,7 @@ static  createValidate (req, res ,next)
             next()
         }
     }
-    static  taskValidate (req, res ,next)
+static  TaskValidate (req, res ,next)
    {
         if(!req.body.title){
             res.status(400).json({
@@ -52,9 +52,8 @@ static  createValidate (req, res ,next)
         else{
             next()
         }
-    }
-
-    static  messageValidate (req, res ,next)
+    }    
+static  messageValidate (req, res ,next)
     {
          if(!req.body.title){
              res.status(400).json({
@@ -69,13 +68,8 @@ static  createValidate (req, res ,next)
              next()
          }
      }
-     static  imageValidate (req, res ,next)
+static  imageValidate (req, res ,next)
     {
-         if(!req.body.title){
-             res.status(400).json({
-                 error: 'Title is require'
-             })
-         }else
           if(!req.file){
             res.status(400).json({
                 error: 'Image File is require'
