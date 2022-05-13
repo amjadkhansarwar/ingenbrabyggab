@@ -7,8 +7,8 @@ const message = new mongoose.Schema({
     allowNull: false,
   },
   task_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Task',
+    type: String,
+    allowNull: false
   },
   message: [
     {
@@ -17,9 +17,7 @@ const message = new mongoose.Schema({
         required: true,
       },
       sender_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        type: String
       },
       sender_name: {
         type: String,

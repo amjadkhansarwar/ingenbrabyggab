@@ -2,6 +2,7 @@ const { Router } = require('express')
 const router = new Router()
 const TaskController = require('../controllers/TaskController')
 const ImageController = require('../controllers/ImageController')
+const messageController = require('../controllers/MessageController')
 const auth = require('../middlewares/auth')
 const validation = require('../validator/validate')
 const fileUpload = require('../middlewares/FileUpload');
@@ -36,33 +37,35 @@ const fileUpload = require('../middlewares/FileUpload');
 
       /// imasge route /////
 
-  // router.post(
-  // '/:id/uploadimage',
-  // auth.userAuth,
-  // fileUpload.single('imageName'),
-  // validation.imageValidate,
-  // ImageController.ImageUpload
-  // );
+ 
   router.get(
   '/allimages',
   auth.userAuth,
   ImageController.GetAllImages
   );
   router.get(
-    '/:id/image',
-    auth.userAuth,
-    ImageController.getImageById
-    );
+  '/:id/image',
+  auth.userAuth,
+  ImageController.getImageById
+  );
   
-  // router.delete(
-  // '/:id/deleteimage',
-  // auth.adminAuth,
-  // ImageController.DeleteImage
-  // );
-  // router.patch(
-  // '/:id/updateimage',
-  // validation.imageValidate,
-  // ImageController.UpdateImage
-  // );
+  // message route //
+  
+  router.post(
+    '/:id/createmessage',
+    auth.userAuth,
+    validation.messageValidate,
+    messageController.CreateMessage
+    );
+  router.get(
+    '/:id/getallmessage',
+    auth.userAuth,
+    messageController.GetAllMessages
+    );
+    router.delete(
+      '/:id/deletemessage',
+      auth.adminAuth,
+      messageController.DeleteMessage
+      );
 
 module.exports= router
