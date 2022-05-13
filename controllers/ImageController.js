@@ -19,15 +19,19 @@ class Images {
     try {
       const task_id = req.params.id;
       const findTask = await Task.findOne({ _id: task_id});
+      console.log(findTask)
       if (!findTask) {
           throw new ResourseNotFoundError('There is no Task' + task_id);
       }else if(!findTask.image){
        res.json({message: 'This task dont have any Picture'})
        }else{
-        const fileName = findTask.image;
-        const image =
-          path.join(__dirname, "..","assets","images", fileName)
-        res.sendFile( image )
+        // const fileName = findTask.image;
+        console.log(findTask.image)
+        res.sendFile(findTask.image, { root: "assets/images" });
+        
+        // const image =
+        //   path.join(__dirname, "..","assets","images", fileName)
+        // res.sendFile( image )
       }
     } catch (error) {
       next(error)
